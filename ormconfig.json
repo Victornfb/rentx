@@ -1,8 +1,8 @@
 {
 	"type": "postgres",
 	"port": 5432,
-	"host": "database_rentx",
+	"host": "localhost",
 	"username": "docker",
-	"password": "J*VF2kAe",
+	"password": "ignite",
 	"database": "rentx"
 }
