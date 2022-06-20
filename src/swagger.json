@@ -2,7 +2,7 @@
 	"openapi": "3.0.0",
 	"info" : {
 		"title": "RentX Documentation",
-		"description": "This is an API od Cars Rent",
+		"description": "This is an API of Cars Rent",
 		"version": "1.0.0",
 		"contact": {
 			"email": "victornfb@outlook.com"
@@ -76,6 +76,70 @@
 							}
 						}
 					}
+				}
+			}
+		},
+		"/categories/import": {
+			"post": {
+				"tags": ["Category"],
+				"summary": "Import a file with a categories list",
+				"description": "Import a file with a categories list",
+				"requestBody": {
+					"content": {
+						"multipart/form-data": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"file": {
+										"type": "string",
+										"format": "binary"
+									}
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created"
+					}
+				}
+			}
+		},
+		"/specifications": {
+			"post": {
+				"tags": ["Specifications"],
+				"summary": "Create a specification",
+				"description": "Create a new specification",
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"$ref": "#/definitions/Specification"
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"500": {
+						"description": "Specification already exists"
+					}
+				}
+			}
+		}
+	},
+	"definitions": {
+		"Specification": {
+			"type": "object",
+			"properties": {
+				"name": {
+					"type": "string"
+				},
+				"description": {
+					"type": "string"
 				}
 			}
 		}
