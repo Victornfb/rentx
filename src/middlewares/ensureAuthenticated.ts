@@ -33,5 +33,9 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
 		throw new AppError('User not found', 401);
 	}
 
+	req.user = {
+		id: user_id,
+	};
+
 	next();
 }
