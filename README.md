@@ -1,6 +1,6 @@
 ## 💻 Projeto
 
-O projeto RentX é uma API Rest para aluguel de carros que utiliza arquitetura limpa e os princípios SOLID.
+O projeto RentX é uma API Rest para aluguel de carros que utiliza arquitetura limpa, além dos princípios SOLID e TDD.
 
 ## 🧪 Tecnologias
 
@@ -13,6 +13,7 @@ Esse projeto foi desenvolvido com as seguintes tecnologias:
 - [Docker](https://www.docker.com/)
 - [PostgreSQL](https://www.postgresql.org/)
 - [TypeORM](https://typeorm.io/)
+- [Jest](https://jestjs.io/)
 
 ## 🚀 Como executar
 
