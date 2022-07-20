@@ -13,7 +13,11 @@ describe('Create rental', () => {
 
 	beforeEach(() => {
 		rentalsRepositoryInMemory = new RentalsRepositoryInMemory();
-		createRentalUseCase = new CreateRentalUseCase(rentalsRepositoryInMemory, dayjsDateProvider);
+		dayjsDateProvider = new DayjsDateProvider();
+		createRentalUseCase = new CreateRentalUseCase(
+			rentalsRepositoryInMemory,
+			dayjsDateProvider
+		);
 	});
 
 	it('should be able to create a new rental', async () => {

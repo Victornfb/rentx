@@ -33,7 +33,7 @@ class CreateRentalUseCase {
 		}
 
 		const dateNow = this.dateProvider.dateNow();
-		const compare = this.dateProvider.compareInHours(expected_return_date, dateNow);
+		const compare = this.dateProvider.compareInHours(dateNow, expected_return_date);
 
 		if (compare < MINIMUM_RENT_HOURS) {
 			throw new AppError(`Invalid return date and time. Minimum of ${MINIMUM_RENT_HOURS} hours.`);
