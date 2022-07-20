@@ -1,6 +1,7 @@
 import { Rental } from "@modules/rentals/infra/typeorm/entities/Rental";
 import { IRentalsRepository } from "@modules/rentals/repositories/IRentalsRepository";
 import { AppError } from "@shared/errors/AppError";
+import { IDateProvider } from "@shared/providers/DateProvider/IDateProvider";
 import dayjs from "dayjs";
 import utc from "dayjs/plugin/utc";
 
@@ -14,7 +15,8 @@ interface IRequest {
 
 class CreateRentalUseCase {
 	constructor(
-		private rentalsRepository: IRentalsRepository
+		private rentalsRepository: IRentalsRepository,
+		private dateProvider: IDateProvider
 	) {}
 	async execute({user_id, car_id, expected_return_date}: IRequest): Promise<Rental> {
 		const MINIMUM_RENT_HOURS = 24;
@@ -30,10 +32,8 @@ class CreateRentalUseCase {
 			throw new AppError("The user already has a rental open");
 		}
 
-		const expectedReturnDateFormat = dayjs(expected_return_date).utc().local().format();
-		const dateNow = dayjs(dayjs()).utc().local().format();
-
-		const compare = dayjs(expectedReturnDateFormat).diff(dateNow, 'hours');
+		const dateNow = this.dateProvider.dateNow();
+		const compare = this.dateProvider.compareInHours(expected_return_date, dateNow);
 
 		if (compare < MINIMUM_RENT_HOURS) {
 			throw new AppError(`Invalid return date and time. Minimum of ${MINIMUM_RENT_HOURS} hours.`);
