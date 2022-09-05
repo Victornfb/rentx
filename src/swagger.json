@@ -9,43 +9,41 @@
 		}
 	},
 	"paths": {
-		"/categories": {
+		"/sessions": {
 			"post": {
-				"tags": ["Category"],
-				"summary": "Create a category",
-				"description": "Create a new category",
+				"tags": ["Session"],
+				"summary": "Authenticate user",
+				"description": "Authenticate user",
 				"requestBody": {
 					"content": {
 						"application/json": {
 							"schema": {
 								"type": "object",
 								"properties": {
-									"name": {
+									"email": {
 										"type": "string"
 									},
-									"description": {
+									"password": {
 										"type": "string"
 									}
-								},
-								"example": {
-									"name": "Category name example",
-									"description": "Category description example"
 								}
 							}
 						}
 					}
 				},
 				"responses": {
-					"201": {
-						"description": "Created"
+					"200": {
+						"description": "Success"
 					},
-					"500": {
-						"description": "Category already exists"
+					"400": {
+						"description": "Email or password incorrect"
 					}
 				}
-			},
+			}
+		},
+		"/categories": {
 			"get": {
-				"tags": ["Category"],
+				"tags": ["Categories"],
 				"summary": "List all categories",
 				"description": "List all categories",
 				"responses": {
@@ -77,13 +75,57 @@
 						}
 					}
 				}
+			},
+			"post": {
+				"tags": ["Categories"],
+				"summary": "Create a category",
+				"description": "Create a new category",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
+				"requestBody": {
+					"content": {
+						"application/json": {
+							"schema": {
+								"type": "object",
+								"properties": {
+									"name": {
+										"type": "string"
+									},
+									"description": {
+										"type": "string"
+									}
+								},
+								"example": {
+									"name": "Category name example",
+									"description": "Category description example"
+								}
+							}
+						}
+					}
+				},
+				"responses": {
+					"201": {
+						"description": "Created"
+					},
+					"500": {
+						"description": "Category already exists"
+					}
+				}
 			}
 		},
 		"/categories/import": {
 			"post": {
-				"tags": ["Category"],
+				"tags": ["Categories"],
 				"summary": "Import a file with a categories list",
 				"description": "Import a file with a categories list",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
 				"requestBody": {
 					"content": {
 						"multipart/form-data": {
@@ -111,6 +153,11 @@
 				"tags": ["Specifications"],
 				"summary": "Create a specification",
 				"description": "Create a new specification",
+				"security": [
+					{
+						"bearerAuth": []
+					}
+				],
 				"requestBody": {
 					"content": {
 						"application/json": {
@@ -141,6 +188,15 @@
 				"description": {
 					"type": "string"
 				}
+			}
+		}
+	},
+	"components": {
+		"securitySchemes": {
+			"bearerAuth": {
+				"type": "http",
+				"scheme": "bearer",
+				"bearerFormat": "JWT"
 			}
 		}
 	}
