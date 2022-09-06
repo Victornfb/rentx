@@ -52,13 +52,13 @@ describe('Create rental', () => {
 			user_id: 'fake-user-id',
 		});
 
-		expect(async () => {
-			await createRentalUseCase.execute({
+		await expect(
+			createRentalUseCase.execute({
 				user_id: 'fake-user-id',
 				car_id: 'another-car-id',
 				expected_return_date: dateAdd24Hours,
-			});
-		}).rejects.toBeInstanceOf(AppError);
+			})
+		).rejects.toEqual(new AppError('The user already has a rental open'));
 	});
 
 	it('should not be able to create a new rental when the car has already a opened rental', async () => {
@@ -68,23 +68,23 @@ describe('Create rental', () => {
 			user_id: 'fake-user-id',
 		});
 
-		expect(async () => {
-			await createRentalUseCase.execute({
+		await expect(
+			createRentalUseCase.execute({
 				user_id: 'another-user-id',
 				car_id: 'fake-car-id',
 				expected_return_date: dateAdd24Hours,
-			});
-		}).rejects.toBeInstanceOf(AppError);
+			})
+		).rejects.toEqual(new AppError('Car not available'));
 	});
 
 	it('should not be able to create a new rental with invalid return date and time', async () => {
-		expect(async () => {
-			await createRentalUseCase.execute({
+		await expect(
+			createRentalUseCase.execute({
 				user_id: 'abc',
 				car_id: 'rst',
 				expected_return_date: dayjs().toDate(),
-			});
-		}).rejects.toBeInstanceOf(AppError);
+			})
+		).rejects.toEqual(new AppError('Invalid return date and time.'));
 	});
 
 })
