@@ -21,18 +21,10 @@ export async function ensureAuthenticated(req: Request, res: Response, next: Nex
 	let user_id = undefined;
 
 	try {
-		const { sub } = verify(token, auth.secret_refresh_token) as IPayload;
+		const { sub } = verify(token, auth.secret_token) as IPayload;
 		user_id = sub;
 	} catch (err) {
 		throw new AppError('Invalid token', 401);
-	}
-
-	const userTokensRepository = new UsersTokensRepository();
-
-	const user = await userTokensRepository.findByUserIdAndRefreshToken(user_id, token);
-
-	if (!user) {
-		throw new AppError('User token not found', 401);
 	}
 
 	req.user = {
