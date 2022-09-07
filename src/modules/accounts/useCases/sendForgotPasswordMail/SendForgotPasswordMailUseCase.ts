@@ -5,6 +5,7 @@ import { IMailProvider } from "@shared/container/providers/MailProvider/IMailPro
 import { AppError } from "@shared/errors/AppError";
 import { inject, injectable } from "tsyringe";
 import { v4 as uuidv4 } from 'uuid';
+import { resolve } from "path";
 
 @injectable()
 class SendForgotPasswordMailUseCase {
@@ -34,10 +35,18 @@ class SendForgotPasswordMailUseCase {
 			expires_date: this.dateProvider.addHours(3),
 		});
 
+		const templetePath = resolve(__dirname, '..', '..', 'views', 'emails', 'forgotPassword.hbs');
+
+		const variables = {
+			name: user.name,
+			link: `${process.env.BASE_URL}/password/reset?token=${token}`,
+		};
+
 		await this.mailProvider.sendMail(
 			email,
 			'Rext - Recuperação de senha',
-			`O link para recuperar a senha é ${token}`
+			variables,
+			templetePath,
 		);
 	}
 }
