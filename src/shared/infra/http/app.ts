@@ -1,5 +1,7 @@
 import 'reflect-metadata';
-import express, { NextFunction, Request, response, Response } from 'express';
+import * as dotenv from 'dotenv';
+dotenv.config();
+import express, { NextFunction, Request, Response } from 'express';
 import 'express-async-errors';
 import SwaggerUi from 'swagger-ui-express';
 import { router } from '@shared/infra/http/routes';
