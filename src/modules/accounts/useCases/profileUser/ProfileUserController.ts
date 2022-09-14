@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { container } from "tsyringe";
-import { ProfileUserUseCase } from "./profileUserUseCase";
+import { ProfileUserUseCase } from "./ProfileUserUseCase";
 
 class ProfileUserController {
 
