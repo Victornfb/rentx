@@ -4,7 +4,7 @@ import { Router } from "express";
 import multer from "multer";
 import uploadConfig from '@config/upload';
 import { ensureAuthenticated } from "@shared/infra/http/middlewares/ensureAuthenticated";
-import { ProfileUserController } from "@modules/accounts/useCases/profileUser/profileUserController";
+import { ProfileUserController } from "@modules/accounts/useCases/profileUser/ProfileUserController";
 
 const usersRoutes = Router();
 
