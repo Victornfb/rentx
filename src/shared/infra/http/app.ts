@@ -10,14 +10,16 @@ import createConnection from '@shared/infra/typeorm';
 import '@shared/container';
 import { AppError } from '@shared/errors/AppError';
 import upload from '@config/upload';
+import rateLimiter from '@shared/infra/http/middlewares/rateLimiter';
 
 createConnection();
 const app = express();
 
 app.use(express.json());
 
-app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(swaggerFile));
+app.use(rateLimiter);
 
+app.use('/api-docs', SwaggerUi.serve, SwaggerUi.setup(swaggerFile));
 app.use('/avatar', express.static(`${upload.tmpFolder}/avatar`));
 app.use('/cars', express.static(`${upload.tmpFolder}/cars`));
 
